@@ -1,0 +1,12 @@
+{
+    "code-runner.clearPreviousOutput": true,
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": false,
+    "files.associations": {
+        "stdio.h": "c"
+    },
+    "workbench.editor.autoLockGroups": {
+        "workbench.editor.chatSession": true
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}
