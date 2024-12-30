@@ -180,6 +180,7 @@ int main(void)
     {
         userClick();
         updateWindow();
+        updateGame();
     }
 
     // system("pause");// 等待用户输入,但是这个函数在非windows系统下可能不会起作用，所以建议使用getch()函数代替
