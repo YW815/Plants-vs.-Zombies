@@ -98,12 +98,7 @@ void updateWindow() // 图像加载函数
     {
         putimage(338 + i * 65, 6, &imgCards[i]);
     }
-    // 渲染移动过程中的植物图片
-    if (curZhiwu > 0)
-    {
-        IMAGE *img = imgPlants[curZhiwu - 1][0];
-        putimagePNG(curX - img->getwidth() / 2, curY - img->getheight() / 2, img);
-    }
+    
     // 遍历地图的每一行
     for (int i = 0; i < 3; i++)
     {
@@ -125,6 +120,13 @@ void updateWindow() // 图像加载函数
                 // }
             }
         }
+    }
+
+    // 渲染移动过程中的植物图片
+    if (curZhiwu > 0)
+    {
+        IMAGE *img = imgPlants[curZhiwu - 1][0];
+        putimagePNG(curX - img->getwidth() / 2, curY - img->getheight() / 2, img);
     }
     EndBatchDraw(); // 结束缓冲
 }
@@ -172,15 +174,49 @@ void userClick()
     }
 }
 
+void updateGame() // 游戏逻辑函数
+{
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (map[i][j].type > 0)
+            {
+                map[i][j].frameIndex++;
+                int zhiwuIndex = map[i][j].type - 1;
+                int FrameNum = map[i][j].frameIndex;
+                if (imgPlants[zhiwuIndex][FrameNum] == NULL)
+                {
+                    map[i][j].frameIndex = 0;
+                }
+            }
+        }
+    }
+}
 // 游戏主函数
 int main(void)
 {
     gameInit();
-    for (;;)
+    int timer = 0;
+    bool flag = true;
+    while (1)
     {
         userClick();
-        updateWindow();
-        updateGame();
+        timer += getDelay();
+        // 如果计时器超过80，设置标志为真并将计时器重置为0
+        if (timer > 80)
+        {
+            flag = true;
+            timer = 0;
+        }
+        // 如果标志为真，重置标志，更新窗口和游戏状态
+        if (flag)
+        {
+            flag = false;
+            updateWindow();
+            updateGame();
+        }
+        Sleep(10);
     }
 
     // system("pause");// 等待用户输入,但是这个函数在非windows系统下可能不会起作用，所以建议使用getch()函数代替
