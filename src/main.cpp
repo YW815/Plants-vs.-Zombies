@@ -207,6 +207,22 @@ void startMainMenu() // 启动界面函数
         putimage(0, 0, &imgStartBg);
         putimagePNG(474,75,flag ? &imgMenu2 : &imgMenu1);
         // Sleep(10);
+        ExMessage msg;
+        if(peekmessage(&msg))
+        {
+            if(msg.message == WM_LBUTTONDOWN)
+            {
+                if(msg.x > 474 && msg.x < 474+300 && msg.y > 75 && msg.y < 75+140)
+                {
+                    flag = 1;
+                    // EndBatchDraw();
+                }
+            }
+            else if(msg.message == WM_LBUTTONUP && flag)
+            {
+                return;
+            }
+        }
         EndBatchDraw();
     }
 }
