@@ -7,7 +7,7 @@
 #include "centerWindow.h"
 #include "tools.h"
 
-#define WIN_WIDTH 900
+#define WIN_WIDTH 1100
 #define WIN_HEIGHT 600
 
 enum
@@ -193,10 +193,30 @@ void updateGame() // 游戏逻辑函数
         }
     }
 }
+
+void startMainMenu() // 启动界面函数
+{
+    IMAGE imgStartBg,imgMenu1,imgMenu2;
+    loadimage(&imgStartBg, "res/Screen/MainMenu.png");
+    loadimage(&imgMenu1, "res/Screen/Menu1.png");
+    loadimage(&imgMenu2, "res/Screen/Menu2.png");
+    int flag = 0;
+    while (1)
+    {
+        BeginBatchDraw();
+        putimage(0, 0, &imgStartBg);
+        putimagePNG(474,75,flag ? &imgMenu2 : &imgMenu1);
+        // Sleep(10);
+        EndBatchDraw();
+    }
+}
 // 游戏主函数
 int main(void)
 {
     gameInit();
+
+    startMainMenu();
+
     int timer = 0;
     bool flag = true;
     while (1)
@@ -204,7 +224,8 @@ int main(void)
         userClick();
         timer += getDelay();
         // 如果计时器超过80，设置标志为真并将计时器重置为0
-        if (timer > 80)
+        // if (timer > 80)
+        if (timer > 20)
         {
             flag = true;
             timer = 0;
