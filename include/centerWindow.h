@@ -11,7 +11,7 @@ void centerWindow(int windowWidth, int windowHeight)//窗口居中函数
     // 计算窗口左上角的位置，使窗口居中
     int windowX = (screenWidth - windowWidth) / 2;
     int windowY = (screenHeight - windowHeight) / 2;
-    MoveWindow(hWnd, windowX, windowY, 900, 600, TRUE); // 移动窗口到指定位置
+    MoveWindow(hWnd, windowX, windowY, windowWidth, windowHeight, TRUE); // 移动窗口到指定位置
 }
 
 #endif // CENTERWINDOW_H

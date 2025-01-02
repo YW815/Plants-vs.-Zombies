@@ -204,25 +204,34 @@ void startMainMenu() // 启动界面函数
     while (1)
     {
         BeginBatchDraw();
+        // 绘制开始背景图像
         putimage(0, 0, &imgStartBg);
+        // 根据标志位绘制不同的菜单图像
         putimagePNG(474,75,flag ? &imgMenu2 : &imgMenu1);
         // Sleep(10);
         ExMessage msg;
+        // 检查是否有消息待处理
         if(peekmessage(&msg))
         {
+            // 如果消息是鼠标左键按下
             if(msg.message == WM_LBUTTONDOWN)
             {
+                // 检查鼠标位置是否在菜单按钮范围内
                 if(msg.x > 474 && msg.x < 474+300 && msg.y > 75 && msg.y < 75+140)
                 {
+                    // 设置标志位为1
                     flag = 1;
                     // EndBatchDraw();
                 }
             }
+            // 如果消息是鼠标左键释放且标志位为1
             else if(msg.message == WM_LBUTTONUP && flag)
             {
+                // 返回结束处理
                 return;
             }
         }
+        // 结束批量绘制
         EndBatchDraw();
     }
 }
