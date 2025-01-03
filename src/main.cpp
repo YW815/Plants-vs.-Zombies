@@ -39,6 +39,14 @@ struct zhiwu
 
 struct zhiwu map[3][9];
 
+struct sunshineBall
+{
+    int x, y;
+    int frameIndex;
+    int destY;
+};
+
+
 bool fileExists(const char *filename) // 判断文件是否存在
 {
     FILE *fp;
