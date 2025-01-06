@@ -6,6 +6,8 @@
 #include <time.h>
 #include "centerWindow.h"
 #include "tools.h"
+#include <iostream> // 包含输入输出流库
+using namespace std; // 使用标准命名空间
 
 #define WIN_WIDTH 1100
 #define WIN_HEIGHT 600
@@ -60,6 +62,7 @@ bool fileExists(const char *filename) // 判断文件是否存在
     fclose(fp);
     return true;
 }
+
 void gameInit() // 窗口初始化函数
 {
     // 加载背景图片和进度条图片
@@ -205,25 +208,34 @@ void createSunshine() // 创建随机阳光函数
     static int count = 0;
     static int lastTime = 200;
     count++;
+
     if (count >= lastTime)
     {
-        lastTime = rand() % 100 + 100;
+        lastTime = rand() % 100 + 100; // 设置下一个阳光出现的间隔
         count = 0;
+
         int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的最大长度
         int i;
-        for (i = 0; i < ballMax && balls[i].used == 0; i++)
+        for (i = 0; i < ballMax; i++)
         {
-            balls[i].used = true;
-            balls[i].frameIndex = 0;
-            balls[i].x = rand() % (WIN_WIDTH - 260) + 260;
-            balls[i].y = 60;
-            balls[i].destY = (rand() % 4) * 90 + 200;
-            balls[i].timer = 0;
-            printf("创建阳光弹射成功\n");
-            break;
+            if (!balls[i].used)
+            {
+                balls[i].used = true;
+                balls[i].frameIndex = 0;
+                balls[i].x = rand() % (WIN_WIDTH - 260) + 260;
+                balls[i].y = 60;
+                balls[i].destY = (rand() % 4) * 90 + 200;
+                balls[i].timer = 0;
+                printf("创建阳光弹射成功\n");
+                break; // 找到一个未使用的阳光对象后立即退出循环
+            }
         }
+
         if (i >= ballMax)
-            return;
+        {
+            // std::cout << "所有阳光对象都在使用中" << std::endl;
+            printf("所有阳光对象都在使用中\n");
+        }
     }
 }
 
@@ -317,6 +329,7 @@ void startMainMenu() // 启动界面函数
         EndBatchDraw();
     }
 }
+
 // 游戏主函数
 int main(void)
 {
