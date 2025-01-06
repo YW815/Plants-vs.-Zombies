@@ -44,8 +44,11 @@ struct sunshineBall
     int x, y;
     int frameIndex;
     int destY;
+    bool used;
+    int timer;
 };
-
+struct sunshineBall balls[10];
+IMAGE imgSunshineBall[29];
 
 bool fileExists(const char *filename) // 判断文件是否存在
 {
@@ -88,8 +91,16 @@ void gameInit() // 窗口初始化函数
         }
     }
     curZhiwu = 0;
-    // 创建游戏的窗口
-    // HWND hWnd = initgraph(WIN_WIDTH, WIN_HEIGHT,1);
+
+    memset(balls, 0, sizeof(balls)); // 加载阳光弹射图片
+    for (int i = 0; i < 29; i++)
+    {
+        char path[100];
+        sprintf(path, "res/Sunshine/%d.png", i + 1);
+        loadimage(&imgSunshineBall[i], path);
+    }
+    srand(time(NULL)); // 初始化随机数种子
+    // HWND hWnd = initgraph(WIN_WIDTH, WIN_HEIGHT,1);// 创建游戏的窗口
     centerWindow(WIN_WIDTH, WIN_HEIGHT); // 居中窗口
 }
 
@@ -106,7 +117,7 @@ void updateWindow() // 图像加载函数
     {
         putimage(338 + i * 65, 6, &imgCards[i]);
     }
-    
+
     // 遍历地图的每一行
     for (int i = 0; i < 3; i++)
     {
@@ -120,12 +131,6 @@ void updateWindow() // 图像加载函数
                 IMAGE *img = imgPlants[map[i][j].type - 1][map[i][j].frameIndex];
                 // 在地图上绘制植物图像
                 putimagePNG(256 + j * 81, 179 + i * 102, img);
-
-                // 如果帧索引达到最大值，移除植物
-                // if (map[i][j].frameIndex >= 20)
-                // {
-                //     map[i][j].type = 0;
-                // }
             }
         }
     }
@@ -136,10 +141,22 @@ void updateWindow() // 图像加载函数
         IMAGE *img = imgPlants[curZhiwu - 1][0];
         putimagePNG(curX - img->getwidth() / 2, curY - img->getheight() / 2, img);
     }
+
+    // 绘制阳光弹射
+    for (int i = 0; i < 10; i++)
+    {
+        if (balls[i].used)
+        {
+            IMAGE *img = &imgSunshineBall[balls[i].frameIndex];
+            putimagePNG(balls[i].x, balls[i].y, img);
+        }
+    }
+    
+
     EndBatchDraw(); // 结束缓冲
 }
 
-void userClick()
+void userClick()// 用户点击处理函数
 {
     ExMessage msg;
     // peekmessage(msg);// 读取消息队列，防止消息丢失
@@ -169,7 +186,7 @@ void userClick()
                 // 计算地图坐标
                 int row = (msg.y - 179) / 102;
                 int col = (msg.x - 256) / 81;
-                printf("row:%d,col:%d\n", row, col); // 测试植物安放位置
+                // printf("row:%d,col:%d\n", row, col); // 测试植物安放位置
                 if (map[row][col].type == 0)
                 {
                     map[row][col].type = curZhiwu;
@@ -178,6 +195,53 @@ void userClick()
             }
             curZhiwu = 0;
             status = 0;
+        }
+    }
+}
+
+void createSunshine() // 创建随机阳光函数
+{
+    static int count = 0;
+    static int lastTime = 400;
+    count++;
+    if (count >= lastTime)
+    {
+        lastTime = rand() % 200 + 200;
+        count = 0;
+        int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的最大长度
+        int i;
+        for (i = 0; i < ballMax && balls[i].used == 0; i++);
+        if (i >= ballMax)
+            return;
+        balls[i].used = true;
+        balls[i].frameIndex = 0;
+        balls[i].x = rand() % (WIN_WIDTH - 260) + 260;
+        balls[i].y = 60;
+        balls[i].destY = (rand() % 4) * 90 + 200;
+        balls[i].timer = 0;
+    }
+}
+
+void updateSunshine() // 更新阳光弹射函数
+{
+    int ballMax = sizeof(balls) / sizeof(balls[0]);
+    for (int i = 0; i < ballMax; i++)
+    {
+        if (balls[i].used)
+        {
+            balls[i].frameIndex =(balls[i].frameIndex + 1) % 29;
+            if(balls[i].timer == 0) 
+            {
+                balls[i].y += 2;
+            }
+            if (balls[i].y >= balls[i].destY)
+            {
+                balls[i].timer ++;
+                if (balls[i].timer > 100)
+                {
+                    balls[i].used = false;
+                }
+            }
         }
     }
 }
@@ -200,11 +264,15 @@ void updateGame() // 游戏逻辑函数
             }
         }
     }
+
+    createSunshine();
+    updateSunshine();
 }
+
 
 void startMainMenu() // 启动界面函数
 {
-    IMAGE imgStartBg,imgMenu1,imgMenu2;
+    IMAGE imgStartBg, imgMenu1, imgMenu2;
     loadimage(&imgStartBg, "res/Screen/MainMenu.png");
     loadimage(&imgMenu1, "res/Screen/Menu1.png");
     loadimage(&imgMenu2, "res/Screen/Menu2.png");
@@ -215,17 +283,17 @@ void startMainMenu() // 启动界面函数
         // 绘制开始背景图像
         putimage(0, 0, &imgStartBg);
         // 根据标志位绘制不同的菜单图像
-        putimagePNG(474,75,flag ? &imgMenu2 : &imgMenu1);
+        putimagePNG(474, 75, flag ? &imgMenu2 : &imgMenu1);
         // Sleep(10);
         ExMessage msg;
         // 检查是否有消息待处理
-        if(peekmessage(&msg))
+        if (peekmessage(&msg))
         {
             // 如果消息是鼠标左键按下
-            if(msg.message == WM_LBUTTONDOWN)
+            if (msg.message == WM_LBUTTONDOWN)
             {
                 // 检查鼠标位置是否在菜单按钮范围内
-                if(msg.x > 474 && msg.x < 474+300 && msg.y > 75 && msg.y < 75+140)
+                if (msg.x > 474 && msg.x < 474 + 300 && msg.y > 75 && msg.y < 75 + 140)
                 {
                     // 设置标志位为1
                     flag = 1;
@@ -233,7 +301,7 @@ void startMainMenu() // 启动界面函数
                 }
             }
             // 如果消息是鼠标左键释放且标志位为1
-            else if(msg.message == WM_LBUTTONUP && flag)
+            else if (msg.message == WM_LBUTTONUP && flag)
             {
                 // 返回结束处理
                 return;
@@ -249,6 +317,7 @@ int main(void)
     gameInit();
 
     startMainMenu();
+
 
     int timer = 0;
     bool flag = true;
