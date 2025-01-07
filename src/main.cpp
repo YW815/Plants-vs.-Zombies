@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <graphics.h>
+#include <easyx.h>
 #include <conio.h>
 #include <windows.h>
 #include <string>
 #include <time.h>
 #include "centerWindow.h"
 #include "tools.h"
+
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
 
 #define WIN_WIDTH 1100
 #define WIN_HEIGHT 600
@@ -49,6 +53,9 @@ struct sunshineBall
 };
 struct sunshineBall balls[10];
 IMAGE imgSunshineBall[29];
+int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的最大长度
+
+int sunshine;
 
 bool fileExists(const char *filename) // 判断文件是否存在
 {
@@ -90,7 +97,9 @@ void gameInit() // 窗口初始化函数
                 break;
         }
     }
+
     curZhiwu = 0;
+    sunshine = 50;
 
     memset(balls, 0, sizeof(balls)); // 加载阳光弹射图片
     for (int i = 0; i < 29; i++)
@@ -100,9 +109,22 @@ void gameInit() // 窗口初始化函数
         loadimage(&imgSunshineBall[i], path);
     }
     srand(time(NULL)); // 初始化随机数种子
-    printf("游戏初始化成功\n");
+    // printf("游戏初始化成功\n");
+
     // HWND hWnd = initgraph(WIN_WIDTH, WIN_HEIGHT,1);// 创建游戏的窗口
     centerWindow(WIN_WIDTH, WIN_HEIGHT); // 居中窗口
+
+    LOGFONT f;
+    printf("创建字体\n");
+    gettextstyle(&f);
+
+    f.lfHeight = 30;
+    f.lfWidth = 15;
+    strcpy(f.lfFaceName, "Segoe UI Black");
+    f.lfQuality = ANTIALIASED_QUALITY; // 抗锯齿效果
+    settextstyle(&f);
+    setbkmode(TRANSPARENT); // 设置背景透明
+    setcolor(BLACK);
 }
 
 void updateWindow() // 图像加载函数
@@ -150,11 +172,34 @@ void updateWindow() // 图像加载函数
         {
             IMAGE *img = &imgSunshineBall[balls[i].frameIndex];
             putimagePNG(balls[i].x, balls[i].y, img);
-            printf("绘制成功\n");
+            // printf("绘制成功\n");
         }
     }
 
+    // 绘制阳光值
+    char str[8];
+    sprintf(str, "%d", sunshine);
+    outtextxy(276, 67, str); // 输出阳光值
+
     EndBatchDraw(); // 结束缓冲
+}
+
+void collectSunshine(ExMessage *msg) // 收集阳光弹射函数
+{
+    int ballMax = sizeof(balls) / sizeof(balls[0]);
+    int w = imgSunshineBall[0].getwidth();
+    int h = imgSunshineBall[0].getheight();
+    for (int i = 0; i < ballMax; i++)
+    {
+        if (msg->x >= balls[i].x && msg->x <= balls[i].x + w && msg->y >= balls[i].y && msg->y <= balls[i].y + h)
+        {
+            balls[i].used = false;
+            sunshine += 25;
+            mciSendString("play res/Sounds/sunshine.mp3", NULL, 0, NULL);
+            // printf("收集阳光弹射成功\n");
+            break;
+        }
+    }
 }
 
 void userClick() // 用户点击处理函数
@@ -173,6 +218,10 @@ void userClick() // 用户点击处理函数
                 // 根据索引值设置当前植物
                 curZhiwu = zhiwuIndex + 1;
                 status = 1;
+            }
+            else
+            {
+                collectSunshine(&msg);
             }
         }
         else if (msg.message == WM_MOUSEMOVE) // 鼠标移动
@@ -203,33 +252,32 @@ void userClick() // 用户点击处理函数
 void createSunshine() // 创建随机阳光函数
 {
     static int count = 0;
-    static int lastTime = 200;
+    static int lastTime = 400;
+    static int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的最大长度
     count++;
     if (count >= lastTime)
     {
-        lastTime = rand() % 100 + 100;
+        lastTime = rand() % 200 + 200;
         count = 0;
-        int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的最大长度
-        int i;
-        for (i = 0; i < ballMax && balls[i].used == 0; i++)
+        for (int i = 0; i < ballMax; i++)
         {
-            balls[i].used = true;
-            balls[i].frameIndex = 0;
-            balls[i].x = rand() % (WIN_WIDTH - 260) + 260;
-            balls[i].y = 60;
-            balls[i].destY = (rand() % 4) * 90 + 200;
-            balls[i].timer = 0;
-            printf("创建阳光弹射成功\n");
-            break;
+            if (!balls[i].used)
+            {
+                balls[i].used = true;
+                balls[i].frameIndex = 0;
+                balls[i].x = rand() % (WIN_WIDTH - 360) + 260;
+                balls[i].y = 60;
+                balls[i].destY = (rand() % 4) * 90 + 200;
+                balls[i].timer = 0;
+                // printf("创建阳光弹射成功\n");
+                break;
+            }
         }
-        if (i >= ballMax)
-            return;
     }
 }
 
 void updateSunshine() // 更新阳光弹射函数
 {
-    int ballMax = sizeof(balls) / sizeof(balls[0]);
     for (int i = 0; i < ballMax; i++)
     {
         if (balls[i].used)
@@ -269,11 +317,11 @@ void updateGame() // 游戏逻辑函数
             }
         }
     }
-    printf("植物状态更新成功\n");
+    // printf("植物状态更新成功\n");
     createSunshine();
-    printf("阳光弹射创建成功\n");
+    // printf("阳光弹射创建成功\n");
     updateSunshine();
-    printf("阳光弹射更新成功\n");
+    // printf("阳光弹射更新成功\n");
 }
 
 void startMainMenu() // 启动界面函数
@@ -343,6 +391,7 @@ int main(void)
             flag = false;
             updateWindow();
             updateGame();
+            // printf("游戏状态更新成功\n");
         }
         Sleep(10);
     }

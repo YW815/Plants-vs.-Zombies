@@ -11,6 +11,8 @@
                 // "-L", "C:\\Windows\\System32",
                 "${file}",
                 "-leasyx",
+                "-lwinmm",
+                "-lgdi32",
                 "-o",
                 
                 "${fileDirname}\\coin\\${fileBasenameNoExtension}.exe"
