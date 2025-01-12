@@ -5,7 +5,7 @@
 
 void centerWindow(int windowWidth, int windowHeight)//窗口居中函数
 {
-    HWND hWnd = initgraph(windowWidth, windowHeight,1); // 初始化窗口
+    HWND hWnd = initgraph(windowWidth, windowHeight); // 初始化窗口
     int screenWidth = GetSystemMetrics(SM_CXSCREEN);  // 获取屏幕宽度
     int screenHeight = GetSystemMetrics(SM_CYSCREEN); // 获取屏幕高度
     // 计算窗口左上角的位置，使窗口居中

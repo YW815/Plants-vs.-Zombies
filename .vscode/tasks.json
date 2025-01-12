@@ -14,8 +14,9 @@
                 "-lwinmm",
                 "-lgdi32",
                 "-o",
-                
-                "${fileDirname}\\coin\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\coin\\${fileBasenameNoExtension}.exe",
+                "-static",  // 使用静态链接
+                // "-mwindows",  // 使用windows subsystem
                 // "${workspaceFolder}\\coin\\${fileBasenameNoExtension}.exe"
             ],
             "options": {

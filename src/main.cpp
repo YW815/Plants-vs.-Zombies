@@ -57,6 +57,15 @@ int ballMax = sizeof(balls) / sizeof(balls[0]); // 计算阳光弹射数组的�
 
 int sunshine;
 
+struct zombies
+{
+    int x, y;
+    int frameIndex;
+    int destY;
+    bool used;
+};
+
+
 bool fileExists(const char *filename) // 判断文件是否存在
 {
     FILE *fp;
