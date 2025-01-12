@@ -345,7 +345,7 @@ void createZombies() // 创建随机僵尸函数
 {
     static int count = 0;
     static int lastTime = 500;
-    count++;
+    count++;// 计时器，和createSunshine()函数原理相同
     if (count >= lastTime)
     {
         lastTime = rand() % 200 + 300;
@@ -368,7 +368,7 @@ void createZombies() // 创建随机僵尸函数
 
 void updateZombies() // 更新僵尸函数
 {
-    static int count = 0;
+    static int count = 0;// 计时器，每2帧更新一次僵尸
     count++;
     if (count >= 2)
     {
