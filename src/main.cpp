@@ -139,9 +139,9 @@ void gameInit() // 窗口初始化函数
     // 预加载音效，使用 alias command 别名命令加载文件，避免每次播放时都要加载文件
     mciSendString("open res/Sounds/sunshine.mp3 alias sunshine", NULL, 0, NULL);
 
-    //初始化僵尸数据
+    // 初始化僵尸数据
     memset(zms, 0, sizeof(zms));
-    //加载僵尸图片
+    // 加载僵尸图片
     for (int i = 0; i < 2; i++)
     {
         for (int j = 0; j < 22; j++)
@@ -222,7 +222,6 @@ void updateWindow() // 图像加载函数
             putimagePNG(zms[i].x, zms[i].y, img);
         }
     }
-
 
     EndBatchDraw(); // 结束缓冲
 }
@@ -357,7 +356,7 @@ void createZombies() // 创建随机僵尸函数
             {
                 zms[i].used = true;
                 zms[i].x = WIN_WIDTH;
-                zms[i].y = 172+(1+rand()%3)*100;
+                zms[i].y = 30 + (1 + rand() % 2) * 102;
                 zms[i].frameIndex = 0;
                 zms[i].speed = 1;
                 // printf("创建僵尸成功\n");
@@ -369,18 +368,24 @@ void createZombies() // 创建随机僵尸函数
 
 void updateZombies() // 更新僵尸函数
 {
-    for (int i = 0; i < zombieMax; i++)
+    static int count = 0;
+    count++;
+    if (count >= 2)
     {
-        if (zms[i].used)
+        count = 0;
+        for (int i = 0; i < zombieMax; i++)
         {
-            zms[i].frameIndex = (zms[i].frameIndex + 1) % 22;
-            zms[i].x-= zms[i].speed;
-            if (zms[i].x > WIN_WIDTH)
+            if (zms[i].used)
             {
-                zms[i].used = false;
-                printf("game over\n");
-                MessageBox(NULL, "game over", "game over", MB_OK);//待优化
-                exit(0); //待优化
+                zms[i].frameIndex = (zms[i].frameIndex + 1) % 22;
+                zms[i].x -= zms[i].speed;
+                if (zms[i].x < 170)
+                {
+                    zms[i].used = false;
+                    printf("game over\n");
+                    MessageBox(NULL, "game over", "game over", MB_OK); // 待优化
+                    exit(0);                                           // 待优化
+                }
             }
         }
     }
