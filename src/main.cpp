@@ -61,10 +61,14 @@ struct zombies
 {
     int x, y;
     int frameIndex;
-    int destY;
+    int speed;
     bool used;
 };
+struct zombies zms[10];
 
+int zombieMax = sizeof(zms) / sizeof(zms[0]); // 计算僵尸数组的最大长度
+
+IMAGE *imgZombies[2][22]; // 僵尸图片
 
 bool fileExists(const char *filename) // 判断文件是否存在
 {
@@ -87,10 +91,10 @@ void gameInit() // 窗口初始化函数
     // 初始化地图数组为0
     memset(map, 0, sizeof(map));
     // 加载卡牌图片
+    char path[100];
     for (int i = 0; i < ZHI_WU_NUM; i++)
     {
         // 生成卡片图片路径
-        char path[100];
         sprintf(path, "res/Cards/card_%d.png", i + 1);
         loadimage(&imgCards[i], path);
         // memset(imgPlants[i], 0, sizeof(imgPlants[i]));
@@ -113,7 +117,6 @@ void gameInit() // 窗口初始化函数
     memset(balls, 0, sizeof(balls)); // 加载阳光弹射图片
     for (int i = 0; i < 29; i++)
     {
-        char path[100];
         sprintf(path, "res/Sunshine/%d.png", i + 1);
         loadimage(&imgSunshineBall[i], path);
     }
@@ -135,6 +138,25 @@ void gameInit() // 窗口初始化函数
 
     // 预加载音效，使用 alias command 别名命令加载文件，避免每次播放时都要加载文件
     mciSendString("open res/Sounds/sunshine.mp3 alias sunshine", NULL, 0, NULL);
+
+    //初始化僵尸数据
+    memset(zms, 0, sizeof(zms));
+    //加载僵尸图片
+    for (int i = 0; i < 2; i++)
+    {
+        for (int j = 0; j < 22; j++)
+        {
+            sprintf(path, "res/Zombies/%d/%d.png", i, j + 1);
+            // loadimage(imgZombies[i][j], path);
+            if (fileExists(path))
+            {
+                imgZombies[i][j] = new IMAGE;
+                loadimage(imgZombies[i][j], path);
+            }
+            else
+                break;
+        }
+    }
 }
 
 void updateWindow() // 图像加载函数
@@ -191,6 +213,17 @@ void updateWindow() // 图像加载函数
     sprintf(str, "%d", sunshine);
     outtextxy(276, 67, str); // 输出阳光值
 
+    // 绘制僵尸
+    for (int i = 0; i < zombieMax; i++)
+    {
+        if (zms[i].used)
+        {
+            IMAGE *img = imgZombies[0][zms[i].frameIndex];
+            putimagePNG(zms[i].x, zms[i].y, img);
+        }
+    }
+
+
     EndBatchDraw(); // 结束缓冲
 }
 
@@ -221,7 +254,7 @@ void userClick() // 用户点击处理函数
     {
         if (msg.message == WM_LBUTTONDOWN) // 鼠标左键按下
         {
-            if (msg.x > 338 && msg.x < 338 + 65 * ZHI_WU_NUM && msg.y > 6 && msg.y < 6 + 65)
+            if (msg.x > 338 && msg.x < 338 + 65 * ZHI_WU_NUM && msg.y > 6 && msg.y < 6 + 105)
             {
                 // 计算植物索引值
                 int zhiwuIndex = (msg.x - 338) / 65;
@@ -309,6 +342,50 @@ void updateSunshine() // 更新阳光弹射函数
     }
 }
 
+void createZombies() // 创建随机僵尸函数
+{
+    static int count = 0;
+    static int lastTime = 500;
+    count++;
+    if (count >= lastTime)
+    {
+        lastTime = rand() % 200 + 300;
+        count = 0;
+        for (int i = 0; i < zombieMax; i++)
+        {
+            if (!zms[i].used)
+            {
+                zms[i].used = true;
+                zms[i].x = WIN_WIDTH;
+                zms[i].y = 172+(1+rand()%3)*100;
+                zms[i].frameIndex = 0;
+                zms[i].speed = 1;
+                // printf("创建僵尸成功\n");
+                break;
+            }
+        }
+    }
+}
+
+void updateZombies() // 更新僵尸函数
+{
+    for (int i = 0; i < zombieMax; i++)
+    {
+        if (zms[i].used)
+        {
+            zms[i].frameIndex = (zms[i].frameIndex + 1) % 22;
+            zms[i].x-= zms[i].speed;
+            if (zms[i].x > WIN_WIDTH)
+            {
+                zms[i].used = false;
+                printf("game over\n");
+                MessageBox(NULL, "game over", "game over", MB_OK);//待优化
+                exit(0); //待优化
+            }
+        }
+    }
+}
+
 void updateGame() // 游戏逻辑函数
 {
     for (int i = 0; i < 3; i++)
@@ -332,6 +409,11 @@ void updateGame() // 游戏逻辑函数
     // printf("阳光弹射创建成功\n");
     updateSunshine();
     // printf("阳光弹射更新成功\n");
+
+    createZombies();
+    // printf("僵尸生成成功\n");
+    updateZombies();
+    // printf("僵尸状态更新成功\n");
 }
 
 void startMainMenu() // 启动界面函数

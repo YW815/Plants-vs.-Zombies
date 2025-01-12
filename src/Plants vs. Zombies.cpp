@@ -141,7 +141,6 @@ void updateWindow()
 
         for (int j = 0; j < 9; j++)
         {
-
             if (map[i][j].type > 0)
             {
 
