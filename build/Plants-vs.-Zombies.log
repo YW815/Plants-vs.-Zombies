@@ -1,0 +1,97 @@
+﻿D:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(516,5): warning MSB8004: Intermediate 目录未以斜杠结尾。  此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Intermediate 目录。
+D:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(517,5): warning MSB8004: Output 目录未以斜杠结尾。  此生成实例将添加斜杠，因为必须有这个斜杠才能正确计算 Output 目录。
+  test2.cpp
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\include\centerWindow.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  (编译源文件“src/test2.cpp”)
+  
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\include\tools.h(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+  (编译源文件“src/test2.cpp”)
+  
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\include\tools.h(112,17): warning C4244: “初始化”: 从“unsigned __int64”转换到“int”，可能丢失数据
+  (编译源文件“src/test2.cpp”)
+  
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(63,15): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(113,15): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(87,9): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(91,13): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(110,9): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(123,5): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(180,5): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Programming\C\Code_vs\game\Plants-vs.-Zombies\src\test2.cpp(385,5): warning C4996: 'getch': The POSIX name for this item is deprecated. Instead, use the ISO C and C++ conformant name: _getch. See online help for details.
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl _putimagePNG(int,int,class IMAGE *)" (?_putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl centerWindow(int,int)" (?centerWindow@@YAXHH@Z) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl collectSunshine(struct ExMessage *)" (?collectSunshine@@YAXPEAUExMessage@@@Z) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl createSunshine(void)" (?createSunshine@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "bool __cdecl fileExists(char const *)" (?fileExists@@YA_NPEBD@Z) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl gameInit(void)" (?gameInit@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int __cdecl getDelay(void)" (?getDelay@@YAHXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl putimagePNG(int,int,class IMAGE *)" (?putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl startMainMenu(void)" (?startMainMenu@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl updateGame(void)" (?updateGame@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl updateSunshine(void)" (?updateSunshine@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl updateWindow(void)" (?updateWindow@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "void __cdecl userClick(void)" (?userClick@@YAXXZ) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: main 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "class IMAGE * (* imgPlants)[20]" (?imgPlants@@3PAY0BE@PEAVIMAGE@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int curX" (?curX@@3HA) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int curY" (?curY@@3HA) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int curZhiwu" (?curZhiwu@@3HA) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "struct zhiwu (* map)[9]" (?map@@3PAY08Uzhiwu@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "struct sunshineBall * balls" (?balls@@3PAUsunshineBall@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int ballMax" (?ballMax@@3HA) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "int sunshine" (?sunshine@@3HA) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "class IMAGE imgBg" (?imgBg@@3VIMAGE@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "class IMAGE imgBar" (?imgBar@@3VIMAGE@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "class IMAGE * imgCards" (?imgCards@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+Plants vs. Zombies.obj : error LNK2005: "class IMAGE * imgSunshineBall" (?imgSunshineBall@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl _putimagePNG(int,int,class IMAGE *)" (?_putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl centerWindow(int,int)" (?centerWindow@@YAXHH@Z) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl createSunshine(void)" (?createSunshine@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "bool __cdecl fileExists(char const *)" (?fileExists@@YA_NPEBD@Z) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl gameInit(void)" (?gameInit@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "int __cdecl getDelay(void)" (?getDelay@@YAHXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl putimagePNG(int,int,class IMAGE *)" (?putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl startMainMenu(void)" (?startMainMenu@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl updateGame(void)" (?updateGame@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl updateSunshine(void)" (?updateSunshine@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl updateWindow(void)" (?updateWindow@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: "void __cdecl userClick(void)" (?userClick@@YAXXZ) 已经在 main.obj 中定义
+test.obj : error LNK2005: main 已经在 main.obj 中定义
+test.obj : error LNK2005: "class IMAGE * (* imgPlants)[20]" (?imgPlants@@3PAY0BE@PEAVIMAGE@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "int curX" (?curX@@3HA) 已经在 main.obj 中定义
+test.obj : error LNK2005: "int curY" (?curY@@3HA) 已经在 main.obj 中定义
+test.obj : error LNK2005: "int curZhiwu" (?curZhiwu@@3HA) 已经在 main.obj 中定义
+test.obj : error LNK2005: "struct zhiwu (* map)[9]" (?map@@3PAY08Uzhiwu@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "struct sunshineBall * balls" (?balls@@3PAUsunshineBall@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "class IMAGE imgBg" (?imgBg@@3VIMAGE@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "class IMAGE imgBar" (?imgBar@@3VIMAGE@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "class IMAGE * imgCards" (?imgCards@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+test.obj : error LNK2005: "class IMAGE * imgSunshineBall" (?imgSunshineBall@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl _putimagePNG(int,int,class IMAGE *)" (?_putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl centerWindow(int,int)" (?centerWindow@@YAXHH@Z) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl collectSunshine(struct ExMessage *)" (?collectSunshine@@YAXPEAUExMessage@@@Z) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl createSunshine(void)" (?createSunshine@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "bool __cdecl fileExists(char const *)" (?fileExists@@YA_NPEBD@Z) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl gameInit(void)" (?gameInit@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "int __cdecl getDelay(void)" (?getDelay@@YAHXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl putimagePNG(int,int,class IMAGE *)" (?putimagePNG@@YAXHHPEAVIMAGE@@@Z) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl startMainMenu(void)" (?startMainMenu@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl updateGame(void)" (?updateGame@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl updateSunshine(void)" (?updateSunshine@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl updateWindow(void)" (?updateWindow@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "void __cdecl userClick(void)" (?userClick@@YAXXZ) 已经在 main.obj 中定义
+test2.obj : error LNK2005: main 已经在 main.obj 中定义
+test2.obj : error LNK2005: "class IMAGE * (* imgPlants)[20]" (?imgPlants@@3PAY0BE@PEAVIMAGE@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "int curX" (?curX@@3HA) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "int curY" (?curY@@3HA) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "int curZhiwu" (?curZhiwu@@3HA) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "struct zhiwu (* map)[9]" (?map@@3PAY08Uzhiwu@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "struct sunshineBall * balls" (?balls@@3PAUsunshineBall@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "int sunshine" (?sunshine@@3HA) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "class IMAGE imgBg" (?imgBg@@3VIMAGE@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "class IMAGE imgBar" (?imgBar@@3VIMAGE@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "class IMAGE * imgCards" (?imgCards@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+test2.obj : error LNK2005: "class IMAGE * imgSunshineBall" (?imgSunshineBall@@3PAVIMAGE@@A) 已经在 main.obj 中定义
+MSVCRTD.lib(exe_winmain.obj) : error LNK2019: 无法解析的外部符号 WinMain，函数 "int __cdecl invoke_main(void)" (?invoke_main@@YAHXZ) 中引用了该符号
+.\output\Plants-vs.-Zombies.exe : fatal error LNK1120: 1 个无法解析的外部命令
